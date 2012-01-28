@@ -11,8 +11,7 @@ Gem::Specification.new do |gem|
   gem.homepage      = "https://github.com/madvertise/slickgrid-rails"
 
   gem.add_dependency "railties", "~> 3.0"
-  gem.add_dependency "coffee-rails"
-  gem.add_dependency "sass-rails"
+  gem.add_dependency "jquery-rails"
 
   gem.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   gem.files         = `git ls-files`.split("\n")
