@@ -170,7 +170,7 @@ drag = $special.drag = {
 		switch ( event.type ){
 			// mousemove, check distance, start dragging
 			case !dd.dragging && 'mousemove': 
-				//  drag tolerance, x² + y² = distance²
+				//  drag tolerance, xÂ² + yÂ² = distanceÂ²
 				if ( Math.pow(  event.pageX-dd.pageX, 2 ) + Math.pow(  event.pageY-dd.pageY, 2 ) < Math.pow( dd.distance, 2 ) ) 
 					break; // distance tolerance not reached
 				event.target = dd.target; // force target from "mousedown" event (fix distance issue)
