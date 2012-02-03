@@ -61,11 +61,11 @@ classes should alter those!
 }
 
 .slick-group-toggle.expanded {
-  background: image-url(slick/collapse.gif) no-repeat center center;
+  background: image-url('slick/collapse.gif') no-repeat center center;
 }
 
 .slick-group-toggle.collapsed {
-  background: image-url(slick/expand.gif) no-repeat center center;
+  background: image-url('slick/expand.gif') no-repeat center center;
 }
 
 .slick-group-totals {
