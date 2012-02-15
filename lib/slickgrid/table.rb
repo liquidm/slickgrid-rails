@@ -1,0 +1,72 @@
+module SlickGrid
+  class Table
+
+    class << self
+      attr_reader :columns
+
+      def register_column(name, options={})
+        @columns ||= {}
+        @columns[name] = options
+      end
+    end
+
+    attr_accessor :rows
+
+    def initialize(collection, i18n_scope="")
+      @collection = collection
+      @i18n_scope = i18n_scope
+      @hidden_columns = [:id]
+    end
+
+    def columns
+      self.class.columns
+    end
+
+    def hide_column(name)
+      @hidden_columns |= [name.to_sym]
+    end
+
+    def active_columns
+      columns.keys - @hidden_columns
+    end
+
+    def as_json
+      {
+        columns: generate_columns,
+        rows: generate_rows,
+      }
+    end
+
+    protected
+
+    def generate_columns
+      active_columns.map do |column|
+        options = columns[column][:options] || {}
+        { :id => column, :field => column, :name => column }.merge(options)
+      end
+    end
+
+    def generate_rows
+      @collection.map do |obj|
+        generate_row(obj)
+      end
+    end
+
+    def generate_row(obj)
+      Hash[columns.map do |name, options|
+        [name, format_cell(obj.send(name), options)]
+      end]
+    end
+
+    def format_cell(obj, options)
+      formatter = options[:formatter]
+
+      if formatter and formatter.respond_to?(:call)
+        formatter.call(obj)
+      else
+        obj
+      end
+    end
+
+  end
+end
