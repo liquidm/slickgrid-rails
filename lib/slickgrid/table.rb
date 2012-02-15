@@ -54,11 +54,11 @@ module SlickGrid
 
     def generate_row(obj)
       Hash[columns.map do |name, options|
-        [name, generate_cell(obj, options)]
+        [name, generate_cell(obj, name, options)]
       end]
     end
 
-    def generate_cell(obj, options)
+    def generate_cell(obj, name, options)
       generator = options[:generator]
 
       if generator and generator.respond_to?(:call)
