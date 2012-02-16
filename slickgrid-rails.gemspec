@@ -12,6 +12,7 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency "railties", "~> 3.0"
   gem.add_dependency "jquery-rails"
+  gem.add_dependency "jquery-plugins-rails"
   gem.add_dependency "sass-rails"
 
   gem.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }

@@ -1,6 +1,6 @@
 module SlickGrid
   module Rails
     VERSION = "0.1.0"
-    SLICK_VERSION = "1a123ff10dc2e92402fa203b600d5b315341339d"
+    SLICK_VERSION = "e082d9d8c62e5d7f7ea2c7ef575e2ee756b41c33"
   end
 end
