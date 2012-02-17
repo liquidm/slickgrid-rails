@@ -4,7 +4,7 @@ module SlickGrid
     class << self
       attr_reader :columns
 
-      def register_column(name, options={})
+      def column(name, options={})
         @columns ||= {}
         @columns[name] = options
       end
@@ -15,7 +15,11 @@ module SlickGrid
     def initialize(collection, i18n_scope="")
       @collection = collection
       @i18n_scope = i18n_scope
-      @hidden_columns = [:id]
+      @hidden_columns = columns.map do |name, options|
+        name
+      end.select do |name|
+        columns[name][:hidden]
+      end
     end
 
     def columns
@@ -26,26 +30,11 @@ module SlickGrid
       @hidden_columns |= [name.to_sym]
     end
 
-    def active_columns
-      columns.keys - @hidden_columns
-    end
-
     def as_json
-      {
-        columns: generate_columns,
-        rows: generate_rows,
-      }
+      generate_rows
     end
 
     protected
-
-    def generate_columns
-      active_columns.map do |column|
-        title = columns[column][:title] || column.to_s
-        options = columns[column][:options] || {}
-        { :id => column, :field => column, :name => title }.merge(options)
-      end
-    end
 
     def generate_rows
       @collection.map do |obj|
