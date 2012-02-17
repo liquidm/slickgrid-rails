@@ -41,8 +41,9 @@ module SlickGrid
 
     def generate_columns
       active_columns.map do |column|
+        title = columns[column][:title] || column.to_s
         options = columns[column][:options] || {}
-        { :id => column, :field => column, :name => column }.merge(options)
+        { :id => column, :field => column, :name => title }.merge(options)
       end
     end
 
