@@ -267,23 +267,23 @@ if (typeof Slick === "undefined") {
         bindAncestorScrollEvents();
 
         $container
-            .on("resize.slickgrid", resizeCanvas);
+            .bind("resize.slickgrid", resizeCanvas);
         $viewport
-            .on("scroll.slickgrid", handleScroll);
+            .bind("scroll.slickgrid", handleScroll);
         $headerScroller
-            .on("contextmenu.slickgrid", handleHeaderContextMenu)
-            .on("click.slickgrid", handleHeaderClick);
+            .bind("contextmenu.slickgrid", handleHeaderContextMenu)
+            .bind("click.slickgrid", handleHeaderClick);
         $canvas
-            .on("keydown.slickgrid", handleKeyDown)
-            .on("click.slickgrid", handleClick)
-            .on("dblclick.slickgrid", handleDblClick)
-            .on("contextmenu.slickgrid", handleContextMenu)
-            .on("draginit", handleDragInit)
-            .on("dragstart", handleDragStart)
-            .on("drag", handleDrag)
-            .on("dragend", handleDragEnd)
-            .on("mouseenter", ".slick-cell", handleMouseEnter)
-            .on("mouseleave", ".slick-cell", handleMouseLeave);
+            .bind("keydown.slickgrid", handleKeyDown)
+            .bind("click.slickgrid", handleClick)
+            .bind("dblclick.slickgrid", handleDblClick)
+            .bind("contextmenu.slickgrid", handleContextMenu)
+            .bind("draginit", handleDragInit)
+            .bind("dragstart", handleDragStart)
+            .bind("drag", handleDrag)
+            .bind("dragend", handleDragEnd)
+            .delegate(".slick-cell", "mouseenter", handleMouseEnter)
+            .delegate(".slick-cell", "mouseleave", handleMouseLeave);
       }
     }
 
@@ -485,6 +485,9 @@ if (typeof Slick === "undefined") {
 
     function setupColumnSort() {
       $headers.click(function (e) {
+        // temporary workaround for a bug in jQuery 1.7.1 (http://bugs.jquery.com/ticket/11328)
+        e.metaKey = e.metaKey || e.ctrlKey;
+
         if ($(e.target).hasClass("slick-resizable-handle")) {
           return;
         }
@@ -501,7 +504,8 @@ if (typeof Slick === "undefined") {
           }
 
           var sortOpts = null;
-          for (var i = 0; i < sortColumns.length; i++) {
+          var i = 0;
+          for (; i < sortColumns.length; i++) {
             if (sortColumns[i].columnId == column.id) {
               sortOpts = sortColumns[i];
               sortOpts.sortAsc = !sortOpts.sortAsc;
@@ -509,15 +513,22 @@ if (typeof Slick === "undefined") {
             }
           }
 
-          if ((!e.shiftKey && !e.metaKey) || !options.multiColumnSort) {
-            sortColumns = [];
+          if (e.metaKey && options.multiColumnSort) {
+            if (sortOpts) {
+              sortColumns.splice(i, 1);
+            }
           }
+          else {
+            if ((!e.shiftKey && !e.metaKey) || !options.multiColumnSort) {
+              sortColumns = [];
+            }
 
-          if (!sortOpts) {
-            sortOpts = { columnId: column.id, sortAsc: true };
-            sortColumns.push(sortOpts);
-          } else if (sortColumns.length == 0) {
-            sortColumns.push(sortOpts);
+            if (!sortOpts) {
+              sortOpts = { columnId: column.id, sortAsc: true };
+              sortColumns.push(sortOpts);
+            } else if (sortColumns.length == 0) {
+              sortColumns.push(sortOpts);
+            }
           }
 
           setSortColumns(sortColumns);
@@ -1001,6 +1012,10 @@ if (typeof Slick === "undefined") {
       });
     }
 
+    function getSortColumns() {
+      return sortColumns;
+    }
+
     function handleSelectedRangesChanged(e, ranges) {
       selectedRows = [];
       var hash = {};
@@ -1273,7 +1288,7 @@ if (typeof Slick === "undefined") {
       }
       scrollDir = 0;
       for (i = 0, rl = rows.length; i < rl; i++) {
-        if (currentEditor && activeRow === i) {
+        if (currentEditor && activeRow === rows[i]) {
           makeActiveCellNormal();
         }
         if (rowsCache[rows[i]]) {
@@ -2710,6 +2725,7 @@ if (typeof Slick === "undefined") {
       "updateColumnHeader": updateColumnHeader,
       "setSortColumn": setSortColumn,
       "setSortColumns": setSortColumns,
+      "getSortColumns": getSortColumns,
       "autosizeColumns": autosizeColumns,
       "getOptions": getOptions,
       "setOptions": setOptions,
