@@ -5,8 +5,8 @@ module SlickGrid
       attr_reader :columns
 
       def column(name, options={})
-        @columns ||= {}
-        @columns[name] = options
+        @columns ||= {id: {hidden: true}}
+        @columns[name.to_sym] = options
       end
     end
 
