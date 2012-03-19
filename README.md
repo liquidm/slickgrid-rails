@@ -24,7 +24,7 @@ Or install it yourself as:
 To use the basic grid functionality you just need to include the slick.js file
 in your Sprocket manifest:
 
-  //= require slick
+    //= require slick
 
 The above example will include all required jQuery dependencies and
 core.js/grid.js from SlickGrid. To use one of the more advanced example modules
