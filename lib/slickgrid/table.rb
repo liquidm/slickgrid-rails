@@ -2,6 +2,9 @@ module SlickGrid
   class Table
 
     class << self
+      # for easy access in generator functions
+      include ::Rails.application.routes.url_helpers
+
       attr_reader :columns
 
       def column(name, options={})
