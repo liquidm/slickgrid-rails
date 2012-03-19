@@ -18,19 +18,10 @@ module SlickGrid
     def initialize(collection, i18n_scope="")
       @collection = collection
       @i18n_scope = i18n_scope
-      @hidden_columns = columns.map do |name, options|
-        name
-      end.select do |name|
-        columns[name][:hidden]
-      end
     end
 
     def columns
       self.class.columns
-    end
-
-    def hide_column(name)
-      @hidden_columns |= [name.to_sym]
     end
 
     def as_json

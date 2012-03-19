@@ -74,12 +74,12 @@ include the class into your manifest:
 
     //= require slick/remotemodel
 
-Then update your table definition to include a hidden path column for each
+Then update your table definition to include a path column for each
 instance:
 
     class UsersTable < SlickGrid::Table
       ...
-      column :path, hidden: true, generator: ->(obj) { user_path(obj) }
+      column :path, generator: ->(obj) { user_path(obj) }
     end
 
 Finally wire up all the grid events (example taken from the
