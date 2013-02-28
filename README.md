@@ -125,6 +125,15 @@ gem):
       @grid.onCellChange.subscribe (e, args) =>
         @model.writeData(args)
 
+## Update SlickGrid
+
+To upgrade SlickGrid version just run
+
+    rake slickgrid:update
+
+It will clone the current SlickGrid master and will copy all javascript and stylesheet files into this repository. 
+Don't forget to update the gemspec version!
+
 ## Contributing
 
 1. Fork it

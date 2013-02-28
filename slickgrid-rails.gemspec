@@ -1,9 +1,8 @@
 # -*- encoding: utf-8 -*-
-require File.expand_path('../lib/slickgrid/rails/version', __FILE__)
 
 Gem::Specification.new do |gem|
   gem.name          = "slickgrid-rails"
-  gem.version       = SlickGrid::Rails::VERSION
+  gem.version       = "0.2.0"
   gem.authors       = ["Benedikt Böhm"]
   gem.email         = ["benedikt.boehm@madvertise.com"]
   gem.description   = %q{SlickGrid Integration for Rails 3.x}
