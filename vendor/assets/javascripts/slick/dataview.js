@@ -1051,7 +1051,9 @@
                       .replace(/\./g, "")
                       .replace(/n/, ".");
 
-        this.sum_ += parseFloat(num);
+     if (num !== NaN) {
+          this.sum_ += parseFloat(num);
+        }
       }
     };
 
