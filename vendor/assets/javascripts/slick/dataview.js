@@ -1046,14 +1046,8 @@
       var val = item[this.field_];
 
       if (val != null && val !== "") {
-        var num = val.replace(/[^\d\.]/g, "")
-                      .replace(/\./, "n")
-                      .replace(/\./g, "")
-                      .replace(/n/, ".");
-
-     if (num !== NaN) {
-          this.sum_ += parseFloat(num);
-        }
+        var num = val.replace(/[\D]+/g, "");
+        this.sum_ += parseFloat(num);
       }
     };
 
