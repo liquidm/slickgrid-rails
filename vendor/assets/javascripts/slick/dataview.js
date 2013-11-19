@@ -1044,8 +1044,10 @@
 
     this.accumulate = function (item) {
       var val = item[this.field_];
-      if (val != null && val !== "" && val !== NaN) {
-        this.sum_ += parseFloat(val);
+
+      if (val != null && val !== "") {
+        var num = val.replace(/[\D]+/g, "");
+        this.sum_ += parseFloat(num);
       }
     };
 
